@@ -15,6 +15,8 @@ import (
 type User struct {
 	user string
 	pass string
+	host string
+	port string
 }
 
 func getEnv() User {
@@ -24,18 +26,22 @@ func getEnv() User {
 	}
 	user := os.Getenv("USR")
 	pass := os.Getenv("PASS")
+	host := os.Getenv("HOST")
+	port := os.Getenv("PORT")
 	admin := User{
 		user: user,
 		pass: pass,
+		host: host,
+		port: port,
 	}
 	return admin
 }
 func getConnection() (client *mongo.Client, ctx context.Context) {
 	user := getEnv().user
 	pass := getEnv().pass
-	host := "localhost"
-	port := 27017
-	uriTemplate := "mongodb://%s:%s@%s:%d"
+	host := getEnv().host
+	port := getEnv().port
+	uriTemplate := "mongodb://%s:%s@%s:%s"
 	uri := fmt.Sprintf(fmt.Sprintf(uriTemplate, user, pass, host, port))
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
