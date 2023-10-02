@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"web-crawler/src/links"
+	"web-crawler/db"
 )
 
 func PrintMemUsage() {
@@ -17,6 +17,7 @@ func PrintMemUsage() {
 
 func main() {
 	PrintMemUsage()
-	links.VisitedLink("https://aprendagolang.com.br")
+	//links.VisitedLink("https://aprendagolang.com.br")
+	db.FindMany()
 	PrintMemUsage()
 }
