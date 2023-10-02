@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -31,7 +32,12 @@ func getEnv() User {
 }
 func getConnection() (client *mongo.Client, ctx context.Context) {
 	user := getEnv().user
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root_username:root_password@localhost:27017"))
+	pass := getEnv().pass
+	host := "localhost"
+	port := 27017
+	uriTemplate := "mongodb://%s:%s@%s:%d"
+	uri := fmt.Sprintf(fmt.Sprintf(uriTemplate, user, pass, host, port))
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 	}
