@@ -17,6 +17,5 @@ func VisitedLink(link string) bool {
 	if err != nil {
 		panic(err)
 	}
-	// _, err := c.Find(context.Background(), data)
 	return n > 0
 }
